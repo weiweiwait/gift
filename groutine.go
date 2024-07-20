@@ -31,7 +31,15 @@ func child() {
 }
 func main() { //runtime来调度协程，所以main结束了就全结束了
 	//main是一个特殊的协程
-	go parent()
+	//go parent()
+	go func() {
+		defer wg.Done() //所有执行完后执行
+		go child()
+		for i := 'a'; i < 'z'; i++ {
+			fmt.Printf("%d\n", i)
+			//time.Sleep(500 * time.Millisecond)
+		}
+	}()
 	go child()
 	fmt.Println("main")
 	//time.Sleep(1500 * time.Millisecond)
