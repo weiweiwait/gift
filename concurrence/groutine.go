@@ -55,6 +55,16 @@ func main() { //runtime来调度协程，所以main结束了就全结束了
 	fmt.Println("进程中存活的协程数", runtime.NumGoroutine())
 }
 
+//	func main() {
+//		fmt.Println(runtime.NumCPU())
+//	}
 //func main() {
-//	fmt.Println(runtime.NumCPU())
+//	nums := make([]int, 5)
+//	for i := 0; i < 5; i++ {
+//		nums[i] = 6
+//	}
+//	for n, m := range nums {
+//		println(n)
+//		println(m)
+//	}
 //}
