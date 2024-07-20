@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"runtime"
 	"sync"
 	"time"
 )
@@ -29,19 +30,22 @@ func child() {
 		time.Sleep(500 * time.Millisecond)
 	}
 }
-func main() { //runtime来调度协程，所以main结束了就全结束了
+func main1() { //runtime来调度协程，所以main结束了就全结束了
 	//main是一个特殊的协程
 	//go parent()
-	go func() {
+	go func(n int) {
 		defer wg.Done() //所有执行完后执行
 		go child()
 		for i := 'a'; i < 'z'; i++ {
 			fmt.Printf("%d\n", i)
 			//time.Sleep(500 * time.Millisecond)
 		}
-	}()
+	}(4)
 	go child()
 	fmt.Println("main")
 	//time.Sleep(1500 * time.Millisecond)
 	wg.Wait() //等wg减为0
+}
+func main() {
+	fmt.Println(runtime.NumCPU())
 }
