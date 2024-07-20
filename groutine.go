@@ -17,7 +17,8 @@ func child() {
 		time.Sleep(500 * time.Millisecond)
 	}
 }
-func main() {
+func main() { //runtime来调度协程，所以main结束了就全结束了
+	//main是一个特殊的协程
 	go parent()
 	go child()
 	time.Sleep(1500 * time.Millisecond)
