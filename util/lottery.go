@@ -3,6 +3,7 @@ package util
 import "math/rand"
 
 //抽奖，给定每个奖品被抽中的概率(无需做归一化处理，但是概率必须大于0)，返回被抽中的奖品下标
+//有几件库存直接赋值给probs
 
 func Lottery(probs []float64) int {
 	if len(probs) == 0 {
