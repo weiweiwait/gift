@@ -25,7 +25,7 @@ func ReleaseLock(rc *redis.Client, name string) {
 	rc.Del(name)
 }
 
-func main() {
+func main2() {
 	rc := database.GetRedisClient()
 	const P = 100
 	const lockName = "dpp"
