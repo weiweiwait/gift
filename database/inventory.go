@@ -1,6 +1,7 @@
 package database
 
 import (
+	"fmt"
 	"log"
 	"strconv"
 )
@@ -12,7 +13,8 @@ const (
 //从Mysql中读出所有奖品的初始库存,存入Redis,如果同时有很多用户来参与抽奖，不能直接在mysql里面减库存,mysql扛不住折磨搞得并发量
 
 func InitGiftInventory() {
-
+	//giftCh := make(chan Gift,100)
+	//go GetAllGiftsV1()
 }
 
 //获取所有奖品剩余的库存量
@@ -39,4 +41,22 @@ func GetAllGiftInventory() []*Gift {
 		}
 	}
 	return gifts
+}
+
+//奖品对应的库存-1
+
+func ReduceInventory(GiftId int) error {
+	client := GetRedisClient()
+	key := prefix + strconv.Itoa(GiftId)
+	n, err := client.Decr(key).Result()
+	if err != nil {
+		log.Fatalf("decr key %s failed %s\n", key, err)
+		return err
+	} else {
+		if n < 0 {
+			log.Printf("%d一无库存，减少失败", GiftId)
+			return fmt.Errorf("%d一无库存，减少失败", GiftId)
+		}
+		return nil
+	}
 }
