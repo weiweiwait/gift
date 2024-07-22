@@ -14,7 +14,7 @@ const (
 
 func InitGiftInventory() {
 	giftCh := make(chan Gift, 100)
-	go GetAllGiftsV1()
+	go GetAllGiftsV2(giftCh)
 	client := GetRedisClient()
 	for {
 		gift, ok := <-giftCh
