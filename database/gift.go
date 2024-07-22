@@ -3,6 +3,7 @@ package database
 import (
 	"gift/util"
 	"gorm.io/gorm"
+	"log"
 )
 
 const EMPTY_GIFT = 1 //空奖品("谢谢参与")的ID
@@ -30,7 +31,8 @@ func GetAllGiftsV1() []*Gift {
 	err := db.Select(Gift{}).Find(&gifts).Error
 	if err != nil {
 		if err != gorm.ErrRecordNotFound {
-			util.LogRus.Errorf("read table %s failed: %s", Gift{}.TableName(), err)
+			//util.LogRus.Errorf("read table %s failed: %s", Gift{}.TableName(), err)
+			log.Fatalf("read table %s failed: %s", Gift{}.TableName(), err)
 		}
 	}
 	return gifts
