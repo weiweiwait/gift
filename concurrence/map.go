@@ -33,7 +33,7 @@ func mapInc(mp *sync.Map, key int) {
 		mp.Store(key, 1)
 	}
 }
-func main() {
+func main4() {
 	go readMap()
 	go writeMap()
 	time.Sleep(1 * time.Second)
