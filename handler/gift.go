@@ -9,6 +9,20 @@ import (
 	"strconv"
 )
 
+//获取所有奖品信息，用于初始化
+
+func GetAllGifts(ctx *gin.Context) {
+	gifts := database.GetAllGiftsV1()
+	if len(gifts) == 0 {
+		ctx.JSON(http.StatusInternalServerError, nil)
+	} else {
+		//抹掉敏感信息
+		for _, gift := range gifts {
+			gift.Count = 0
+		}
+		ctx.JSON(http.StatusOK, gifts)
+	}
+}
 func Lottery(ctx *gin.Context) {
 	for try := 0; try < 10; try++ {
 		gifts := database.GetAllGiftInventory()
