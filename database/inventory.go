@@ -13,8 +13,23 @@ const (
 //从Mysql中读出所有奖品的初始库存,存入Redis,如果同时有很多用户来参与抽奖，不能直接在mysql里面减库存,mysql扛不住折磨搞得并发量
 
 func InitGiftInventory() {
-	//giftCh := make(chan Gift,100)
+	giftCh := make(chan Gift, 100)
 	//go GetAllGiftsV1()
+	client := GetRedisClient()
+	for {
+		gift, ok := <-giftCh
+		if !ok {
+			//channel已经消费完了
+			break
+		}
+		if gift.Count <= 0 {
+			continue //没有库存的商品不参与抽奖
+		}
+		err := client.Set(prefix+strconv.Itoa(gift.Id), gift.Count, 0).Err()
+		if err != nil {
+			log.Fatalf("set gift %d:%s count to %d failed: %s", gift.Id, gift.Name, gift.Count, err)
+		}
+	}
 }
 
 //获取所有奖品剩余的库存量
