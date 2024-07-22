@@ -5,6 +5,7 @@ go 1.21
 require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-redis/redis v6.15.9+incompatible
+	github.com/leemcloughlin/gofarmhash v0.0.0-20160919192320-0a055c5b87a8
 	github.com/sirupsen/logrus v1.9.3
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/gorm v1.25.7
