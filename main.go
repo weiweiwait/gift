@@ -1,9 +1,9 @@
 package main
 
 import (
-	"gift/database"
 	"gift/handler"
 	"github.com/gin-gonic/gin"
+	"github.com/segmentio/kafka-go"
 	"log"
 	"net/http"
 	"os"
@@ -28,14 +28,24 @@ func listenSignal() {
 		}
 	}
 }
+
+var reader *kafka.Reader
+
 func Init() {
-	database.InitGiftInventory()
+	//database.InitGiftInventory()
 	//
 	//if err := database.ClearOrders();err != nil{
 	//	panic(err)
 	//}else{
 	//	log.Fatalln("clear table orders")
 	//}
+	//reader = kafka.NewReader(kafka.ReaderConfig{
+	//	Brokers: []string{"localhost:9092"},
+	//	Topic: "topic",
+	//	StartOffset: kafka.LastOffset,
+	//	GroupID: "serialize_order",
+	//	CommitInterval: 1*time.Second,
+	//})
 	handler.InitChannel()
 	go func() {
 		handler.TakeOrder()
@@ -46,10 +56,10 @@ func Init() {
 func main() {
 	Init()
 	router := gin.Default()
-	router.Static("/js", "views/js")
-	router.Static("/js", "views/img")
-	router.StaticFile("/favicon.ico", "views/img/dpp.png")
-	router.LoadHTMLFiles("views/lottery.html")
+	//router.Static("/js", "views/js")
+	//router.Static("/js", "views/img")
+	//router.StaticFile("/favicon.ico", "views/img/dpp.png")
+	//router.LoadHTMLFiles("views/lottery.html")
 	router.GET("/", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "lottery.html", nil)
 	})

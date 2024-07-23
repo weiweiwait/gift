@@ -49,6 +49,7 @@ func Lottery(ctx *gin.Context) {
 		} else {
 			//database.CreateOrder(1,giftId)
 			PutOrder(1, giftId)
+			//ProduceOrder(1,giftId)
 			ctx.String(http.StatusOK, strconv.Itoa(giftId))
 			return
 		}
