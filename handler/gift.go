@@ -47,6 +47,8 @@ func Lottery(ctx *gin.Context) {
 			log.Printf("奖品%d减少库存失败", giftId)
 			continue
 		} else {
+			//database.CreateOrder(1,giftId)
+			PutOrder(1, giftId)
 			ctx.String(http.StatusOK, strconv.Itoa(giftId))
 			return
 		}
