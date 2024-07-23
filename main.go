@@ -1,4 +1,4 @@
-package gift
+package main
 
 import (
 	"gift/database"

@@ -44,9 +44,9 @@ func TakeOrder() {
 
 func CloseChannel() {
 	stopCh <- struct{}{}
-	//select {
-	//case stopCh<- struct{}{}://防止阻塞
-	//default:
-	//
-	//}
+	select {
+	case stopCh <- struct{}{}: //防止阻塞，外面套一个select
+	default:
+
+	}
 }
