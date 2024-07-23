@@ -80,3 +80,20 @@ func Handle3() int {
 		return 0
 	}
 }
+func Handle4() int {
+	workDone := make(chan int, 1)
+	ctx, cancel := context.WithTimeout(context.Background(), Timeout)
+	defer cancel()
+	go func() { //把要超时控制的函数放一个携程里面
+		n := LongTimeWork()
+		workDone <- n
+	}()
+	select {
+	case n := <-workDone:
+		fmt.Println("LongTimeWork return")
+		return n
+	case <-ctx.Done():
+		fmt.Println("LongTimeWork timeout")
+		return 0
+	}
+}
