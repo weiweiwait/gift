@@ -28,7 +28,8 @@ var (
 func GetAllGiftsV1() []*Gift {
 	db := GetGiftDBConnection()
 	var gifts []*Gift
-	err := db.Select(Gift{}).Find(&gifts).Error
+	//err := db.Select(Gift{}).Find(&gifts).Error
+	err := db.Select("id, name, price, picture, count").Find(&gifts).Error
 	if err != nil {
 		if err != gorm.ErrRecordNotFound {
 			//util.LogRus.Errorf("read table %s failed: %s", Gift{}.TableName(), err)
@@ -46,7 +47,8 @@ func GetAllGiftsV2(ch chan<- Gift) {
 	maxid := 0
 	for {
 		var gifts []Gift
-		err := db.Select(Gift{}).Where("id>?", maxid).Limit(PAGE_SIZE).Find(&gifts).Error
+		//err := db.Select(Gift{}).Where("id>?", maxid).Limit(PAGE_SIZE).Find(&gifts).Error
+		err := db.Select("id, name, price, picture, count").Limit(PAGE_SIZE).Find(&gifts).Error
 		if err != nil {
 			if err != gorm.ErrRecordNotFound {
 				log.Fatalf("read table %s failed %s", Gift{}.TableName(), err)

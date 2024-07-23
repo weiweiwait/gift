@@ -30,6 +30,7 @@ func listenSignal() {
 }
 func Init() {
 	database.InitGiftInventory()
+	//
 	//if err := database.ClearOrders();err != nil{
 	//	panic(err)
 	//}else{

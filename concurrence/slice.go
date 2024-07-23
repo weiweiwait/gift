@@ -6,7 +6,7 @@ import (
 )
 
 // slice支持并发操作，但是并不保证结果准确性
-func main() {
+func main000() {
 	const LEN = 10
 	arr := make([]int, LEN)
 	const P = 2
