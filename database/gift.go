@@ -15,7 +15,7 @@ type Gift struct {
 	Count   int    `gorm:"column:count"`
 }
 
-//test
+//test11
 
 func (g Gift) TableName() string {
 	return "inventory"
